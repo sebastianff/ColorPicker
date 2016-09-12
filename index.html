@@ -11,14 +11,33 @@
     <div id="example"></div>
     <script type="text/babel">
 
-      var ColorScreen = React.createClass({
-        render: function() {
-          return (
-            <div style={{backgroundColor: this.props.color ,height:'500px',width:'500px'}}>
-            </div>
-          );
+      class Canvas extends React.Component {
+            componentDidMount() {
+                this.updateCanvas();
+            }
+            componentWillReceiveProps() {
+                this.updateCanvas();
+            }
+            updateCanvas() {
+                const ctx = this.refs.canvas.getContext('2d');
+                ctx.fillStyle=this.props.color;
+                ctx.fillRect(0,0, 100, 100);
+            }
+            checkColor(evt){
+                var rect = evt.target.getBoundingClientRect();
+                var x = evt.pageX - rect.left;
+                var y = evt.pageY - rect.top;
+                const ctx = evt.target.getContext('2d');
+                var imgData=ctx.getImageData(x,y,1,1).data;
+                console.log(imgData)
+            }   
+            render() {
+                return (
+                    <canvas onClick={this.checkColor} ref="canvas" width={300} height={300}/>
+                );
+            }
         }
-      });
+
       
       class ColorPicker extends React.Component {
         constructor() {
@@ -38,10 +57,10 @@
         render() {
           return (
             <div>
-              <ColorScreen color={this.state.color}/>
-              <input type="range" min="0" max="256" ref="red" onChange={this.changeColor}></input>
-              <input type="range" min="0" max="256" ref="blue" onChange={this.changeColor}></input>
-              <input type="range" min="0" max="256" ref="green" onChange={this.changeColor}></input>
+              <Canvas color={this.state.color}/>
+              <input type="range" min="0" max="255" ref="red" onChange={this.changeColor}></input>
+              <input type="range" min="0" max="255" ref="blue" onChange={this.changeColor}></input>
+              <input type="range" min="0" max="255" ref="green" onChange={this.changeColor}></input>
             </div>
           );
         }
