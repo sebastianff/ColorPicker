@@ -10,30 +10,35 @@
   <body>
     <div id="example"></div>
     <script type="text/babel">
+
+      var ColorScreen = React.createClass({
+        render: function() {
+          return (
+            <div style={{backgroundColor: this.props.color ,height:'500px',width:'500px'}}>
+            </div>
+          );
+        }
+      });
       
       class ColorPicker extends React.Component {
         constructor() {
           super();
           this.state = {
-            red: 0,
-            blue: 0,
-            green: 0
+            color:""
           };
           this.changeColor = this.changeColor.bind(this);
         }
         changeColor() {
+          var color = "rgb("+this.refs.red.value+", "+this.refs.blue.value+", "+this.refs.green.value+")"
           this.setState({
-            red: this.refs.red.value,
-            blue: this.refs.blue.value,
-            green: this.refs.green.value,
+            color:color
           });
-          console.log(this.state.red);
-          console.log(this.state.blue);
-          console.log(this.state.green);
+          console.log(color);
         }
         render() {
           return (
             <div>
+              <ColorScreen color={this.state.color}/>
               <input type="range" min="0" max="256" ref="red" onChange={this.changeColor}></input>
               <input type="range" min="0" max="256" ref="blue" onChange={this.changeColor}></input>
               <input type="range" min="0" max="256" ref="green" onChange={this.changeColor}></input>
