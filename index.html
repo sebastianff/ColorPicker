@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Hello React!</title>
+    <script src="https://unpkg.com/react@15.3.1/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15.3.1/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+  </head>
+  <body>
+    <div id="example"></div>
+    <script type="text/babel">
+      
+      class ColorPicker extends React.Component {
+        constructor() {
+          super();
+          this.state = {
+            red: 0,
+            blue: 0,
+            green: 0
+          };
+          this.changeColor = this.changeColor.bind(this);
+        }
+        changeColor() {
+          this.setState({
+            red: this.refs.red.value,
+            blue: this.refs.blue.value,
+            green: this.refs.green.value,
+          });
+          console.log(this.state.red);
+          console.log(this.state.blue);
+          console.log(this.state.green);
+        }
+        render() {
+          return (
+            <div>
+              <input type="range" min="0" max="256" ref="red" onChange={this.changeColor}></input>
+              <input type="range" min="0" max="256" ref="blue" onChange={this.changeColor}></input>
+              <input type="range" min="0" max="256" ref="green" onChange={this.changeColor}></input>
+            </div>
+          );
+        }
+      }
+
+      ReactDOM.render(
+        <ColorPicker />,
+        document.getElementById('example')
+      );
+    </script>
+  </body>
+</html>
