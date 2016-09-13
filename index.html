@@ -22,23 +22,22 @@
                 const ctx = this.refs.canvas.getContext('2d');
                 ctx.fillStyle=this.props.color;
                 ctx.fillRect(0,0, 100, 100);
-            }
-            checkColor(evt){
-                var rect = evt.target.getBoundingClientRect();
-                var x = evt.pageX - rect.left;
-                var y = evt.pageY - rect.top;
-                const ctx = evt.target.getContext('2d');
-                var imgData=ctx.getImageData(x,y,1,1).data;
-                console.log(imgData)
-            }   
+            }  
             render() {
                 return (
-                    <canvas onClick={this.checkColor} ref="canvas" width={300} height={300}/>
+                    <canvas ref="canvas" width={300} height={300}/>
                 );
             }
         }
 
         class Gradient extends React.Component {
+            constructor() {
+              super();
+              this.state = {
+                gradientColor: ""
+              };
+              this.checkColor = this.checkColor.bind(this);
+            }
             componentDidMount() {
                 this.updateCanvas();
             }
@@ -46,17 +45,30 @@
                 this.updateCanvas();
             }
             updateCanvas() {
-                console.log(this.props.colorOne)
-                const ctx = this.refs.canvasTwo.getContext('2d');
+                const ctx = this.refs.GradientCanvas.getContext('2d');
                 var grd=ctx.createLinearGradient(0,0,170,0);
                 grd.addColorStop(0,this.props.colorOne);
                 grd.addColorStop(1,this.props.colorTwo);
                 ctx.fillStyle=grd;
                 ctx.fillRect(20,20,150,100);
-            }  
+            }
+            checkColor(evt){
+                var rect = evt.target.getBoundingClientRect();
+                var x = evt.pageX - rect.left;
+                var y = evt.pageY - rect.top;
+                const ctx = evt.target.getContext('2d');
+                var imgData=ctx.getImageData(x,y,1,1).data;
+                var color = "rgb("+imgData[0]+", "+imgData[1]+", "+imgData[2]+")"
+                this.setState({gradientColor: color});
+                console.log(this.state.gradientColor)
+            } 
+
             render() {
                 return (
-                    <canvas ref="canvasTwo" width={300} height={300}/>
+                    <div>
+                    <canvas onClick={this.checkColor} ref="GradientCanvas" width={300} height={300}/>
+                    <Canvas color={this.state.gradientColor}/>
+                    </div>
                 );
             }
         }
@@ -67,7 +79,8 @@
           super();
           this.state = {
             colorOne:"red",
-            colorTwo:"blue"
+            colorTwo:"blue",
+            gradient:""
           };
           this.changeColor = this.changeColor.bind(this);
         }
