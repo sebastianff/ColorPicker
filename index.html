@@ -38,29 +38,62 @@
             }
         }
 
+        class Gradient extends React.Component {
+            componentDidMount() {
+                this.updateCanvas();
+            }
+            componentWillReceiveProps() {
+                this.updateCanvas();
+            }
+            updateCanvas() {
+                console.log(this.props.colorOne)
+                const ctx = this.refs.canvasTwo.getContext('2d');
+                var grd=ctx.createLinearGradient(0,0,170,0);
+                grd.addColorStop(0,this.props.colorOne);
+                grd.addColorStop(1,this.props.colorTwo);
+                ctx.fillStyle=grd;
+                ctx.fillRect(20,20,150,100);
+            }  
+            render() {
+                return (
+                    <canvas ref="canvasTwo" width={300} height={300}/>
+                );
+            }
+        }
+
       
       class ColorPicker extends React.Component {
         constructor() {
           super();
           this.state = {
-            color:""
+            colorOne:"red",
+            colorTwo:"blue"
           };
           this.changeColor = this.changeColor.bind(this);
         }
         changeColor() {
           var color = "rgb("+this.refs.red.value+", "+this.refs.blue.value+", "+this.refs.green.value+")"
           this.setState({
-            color:color
+            colorOne:color
+          });
+          var color = "rgb("+this.refs.redTwo.value+", "+this.refs.blueTwo.value+", "+this.refs.greenTwo.value+")"
+          this.setState({
+            colorTwo:color
           });
           console.log(color);
         }
         render() {
           return (
             <div>
-              <Canvas color={this.state.color}/>
+              <Canvas color={this.state.colorOne}/>
+              <Canvas color={this.state.colorTwo}/>
+              <Gradient colorOne={this.state.colorOne} colorTwo={this.state.colorTwo}/>
               <input type="range" min="0" max="255" ref="red" onChange={this.changeColor}></input>
               <input type="range" min="0" max="255" ref="blue" onChange={this.changeColor}></input>
               <input type="range" min="0" max="255" ref="green" onChange={this.changeColor}></input>
+              <input type="range" min="0" max="255" ref="redTwo" onChange={this.changeColor}></input>
+              <input type="range" min="0" max="255" ref="blueTwo" onChange={this.changeColor}></input>
+              <input type="range" min="0" max="255" ref="greenTwo" onChange={this.changeColor}></input>
             </div>
           );
         }
