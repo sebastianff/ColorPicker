@@ -34,7 +34,8 @@
             constructor() {
               super();
               this.state = {
-                gradientColor: ""
+                gradientColor: "",
+                complementColor:""
               };
               this.checkColor = this.checkColor.bind(this);
             }
@@ -52,12 +53,20 @@
                 ctx.fillStyle=grd;
                 ctx.fillRect(20,20,150,100);
             }
+            complementColor(x,y,z){
+              var comX = 256 - x;
+              var comY = 256 - y;
+              var comZ = 256 - z;
+              var colorz = "rgb("+comX+", "+comY+", "+comZ+")"
+              this.setState({complementColor: colorz});
+            }
             checkColor(evt){
                 var rect = evt.target.getBoundingClientRect();
                 var x = evt.pageX - rect.left;
                 var y = evt.pageY - rect.top;
                 const ctx = evt.target.getContext('2d');
                 var imgData=ctx.getImageData(x,y,1,1).data;
+                var complement = this.complementColor(imgData[0],imgData[1],imgData[2])
                 var color = "rgb("+imgData[0]+", "+imgData[1]+", "+imgData[2]+")"
                 this.setState({gradientColor: color});
                 console.log(this.state.gradientColor)
@@ -68,6 +77,7 @@
                     <div>
                     <canvas onClick={this.checkColor} ref="GradientCanvas" width={300} height={300}/>
                     <Canvas color={this.state.gradientColor}/>
+                    <Canvas color={this.state.complementColor}/>
                     </div>
                 );
             }
