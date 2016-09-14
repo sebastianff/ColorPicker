@@ -1,8 +1,0 @@
-checkColor(evt){
-                var rect = evt.target.getBoundingClientRect();
-                var x = evt.pageX - rect.left;
-                var y = evt.pageY - rect.top;
-                const ctx = evt.target.getContext('2d');
-                var imgData=ctx.getImageData(x,y,1,1).data;
-                console.log(imgData)
-            }  
