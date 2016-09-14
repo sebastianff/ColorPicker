@@ -7,6 +7,11 @@
     <script src="https://unpkg.com/react-dom@15.3.1/dist/react-dom.js"></script>
     <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style type="text/css">
+      .container{
+        margin-top: 30px;
+      }
+    </style>
     
   </head>
   <body>
@@ -23,7 +28,7 @@
             updateCanvas() {
                 const ctx = this.refs.canvas.getContext('2d');
                 ctx.fillStyle=this.props.color;
-                ctx.fillRect(0,0, 100, 100);
+                ctx.fillRect(0,0, 300, 100);
             }  
             render() {
                 return (
@@ -36,8 +41,8 @@
             constructor() {
               super();
               this.state = {
-                colorOne:"red",
-                colorTwo:"blue",
+                colorOne:"rgb(127,127,127)",
+                colorTwo:"rgb(127,127,127)",
                 gradientColor: "",
                 complementColor:"",
                 tintedColor:"",
@@ -64,7 +69,7 @@
                 grd.addColorStop(0,this.state.colorOne);
                 grd.addColorStop(1,this.state.colorTwo);
                 ctx.fillStyle=grd;
-                ctx.fillRect(20,20,150,100);
+                ctx.fillRect(0,0,700,200);
             }
             changeColor() {
               var color = "rgb("+this.refs.red.value+", "+this.refs.blue.value+", "+this.refs.green.value+")"
@@ -120,36 +125,38 @@
             render() {
                 return (
                     <div>
-                      <div className="row">
-                        <div className="col-md-4">
-                          <input type="range" min="0" max="255" ref="red" onChange={this.changeColor}></input>
-                          <input type="range" min="0" max="255" ref="blue" onChange={this.changeColor}></input>
-                          <input type="range" min="0" max="255" ref="green" onChange={this.changeColor}></input>
-                          <Canvas color={this.state.colorOne}/>
-                        </div>
-                        <div className="col-md-4">
-                         <canvas onClick={this.checkColor} ref="GradientCanvas" width={300} height={300}/>
-                        </div>
-                        <div className="col-md-4">
-                          <input type="range" min="0" max="255" ref="redTwo" onChange={this.changeColor}></input>
-                          <input type="range" min="0" max="255" ref="blueTwo" onChange={this.changeColor}></input>
-                          <input type="range" min="0" max="255" ref="greenTwo" onChange={this.changeColor}></input>
-                          <Canvas color={this.state.colorTwo}/>
-                        </div>
+                      <div className="container">
                         <div className="row">
-                          <div className="col-md-3">
-                            <Canvas color={this.state.gradientColor}/>
+                          <div className="col-md-4">
+                            <input type="range" min="0" max="255" ref="red" onChange={this.changeColor}></input>
+                            <input type="range" min="0" max="255" ref="blue" onChange={this.changeColor}></input>
+                            <input type="range" min="0" max="255" ref="green" onChange={this.changeColor}></input>
+                            <Canvas color={this.state.colorOne}/>
                           </div>
-                          <div className="col-md-3">
-                            <Canvas color={this.state.complementColor}/>
+                          <div className="col-md-4">
+                           <canvas onClick={this.checkColor} ref="GradientCanvas" width={300} height={300}/>
                           </div>
-                          <div className="col-md-3">
-                            <Canvas color={this.state.tintedColor}/>
-                            <input type="range" min="0" max="200" ref="tint" onChange={this.changeTint}></input>
+                          <div className="col-md-4">
+                            <input type="range" min="0" max="255" ref="redTwo" onChange={this.changeColor}></input>
+                            <input type="range" min="0" max="255" ref="blueTwo" onChange={this.changeColor}></input>
+                            <input type="range" min="0" max="255" ref="greenTwo" onChange={this.changeColor}></input>
+                            <Canvas color={this.state.colorTwo}/>
                           </div>
-                          <div className="col-md-3">
-                            <Canvas color={this.state.shadedColor}/>
-                            <input type="range" min="0" max="100" ref="shade" onChange={this.changeShade}></input>
+                          <div className="row">
+                            <div className="col-md-3">
+                              <Canvas color={this.state.gradientColor}/>
+                            </div>
+                            <div className="col-md-3">
+                              <Canvas color={this.state.complementColor}/>
+                            </div>
+                            <div className="col-md-3">
+                              <Canvas color={this.state.tintedColor}/>
+                              <input type="range" min="0" max="100" ref="tint" onChange={this.changeTint}></input>
+                            </div>
+                            <div className="col-md-3">
+                              <Canvas color={this.state.shadedColor}/>
+                              <input type="range" min="0" max="100" ref="shade" onChange={this.changeShade}></input>
+                            </div>
                           </div>
                         </div>
                       </div>
