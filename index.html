@@ -6,6 +6,7 @@
     <script src="https://unpkg.com/react@15.3.1/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15.3.1/dist/react-dom.js"></script>
     <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     
   </head>
   <body>
@@ -35,6 +36,8 @@
             constructor() {
               super();
               this.state = {
+                colorOne:"red",
+                colorTwo:"blue",
                 gradientColor: "",
                 complementColor:"",
                 tintedColor:"",
@@ -44,7 +47,9 @@
                 tint3:""
               };
               this.checkColor = this.checkColor.bind(this);
+              this.changeColor = this.changeColor.bind(this);
               this.changeTint = this.changeTint.bind(this);
+              this.changeShade = this.changeTint.bind(this);
 
             }
             componentDidMount() {
@@ -56,10 +61,21 @@
             updateCanvas() {
                 const ctx = this.refs.GradientCanvas.getContext('2d');
                 var grd=ctx.createLinearGradient(0,0,170,0);
-                grd.addColorStop(0,this.props.colorOne);
-                grd.addColorStop(1,this.props.colorTwo);
+                grd.addColorStop(0,this.state.colorOne);
+                grd.addColorStop(1,this.state.colorTwo);
                 ctx.fillStyle=grd;
                 ctx.fillRect(20,20,150,100);
+            }
+            changeColor() {
+              var color = "rgb("+this.refs.red.value+", "+this.refs.blue.value+", "+this.refs.green.value+")"
+              this.setState({
+                colorOne:color
+              });
+              var color = "rgb("+this.refs.redTwo.value+", "+this.refs.blueTwo.value+", "+this.refs.greenTwo.value+")"
+              this.setState({
+                colorTwo:color
+              });
+              this.updateCanvas()
             }
             complementColor(x,y,z){
               var comX = 256 - x;
@@ -105,6 +121,14 @@
                     <Canvas color={this.state.complementColor}/>
                     <Canvas color={this.state.tintedColor}/>
                     <Canvas color={this.state.shadedColor}/>
+                    <Canvas color={this.state.colorOne}/>
+                    <Canvas color={this.state.colorTwo}/>
+                    <input type="range" min="0" max="255" ref="red" onChange={this.changeColor}></input>
+                    <input type="range" min="0" max="255" ref="blue" onChange={this.changeColor}></input>
+                    <input type="range" min="0" max="255" ref="green" onChange={this.changeColor}></input>
+                    <input type="range" min="0" max="255" ref="redTwo" onChange={this.changeColor}></input>
+                    <input type="range" min="0" max="255" ref="blueTwo" onChange={this.changeColor}></input>
+                    <input type="range" min="0" max="255" ref="greenTwo" onChange={this.changeColor}></input>
                     <input type="range" min="0" max="200" ref="tint" onChange={this.changeTint}></input>
                     <input type="range" min="0" max="200" ref="shade" onChange={this.changeShade}></input>
                     </div>
@@ -112,52 +136,10 @@
             }
         }
 
-      
-      class ColorPicker extends React.Component {
-        constructor() {
-          super();
-          this.state = {
-            colorOne:"red",
-            colorTwo:"blue",
-            gradient:"",
-            tintLevel:""
-          };
-          
-          this.changeColor = this.changeColor.bind(this);
-          
-        }
-        changeColor() {
-          var color = "rgb("+this.refs.red.value+", "+this.refs.blue.value+", "+this.refs.green.value+")"
-          this.setState({
-            colorOne:color
-          });
-          var color = "rgb("+this.refs.redTwo.value+", "+this.refs.blueTwo.value+", "+this.refs.greenTwo.value+")"
-          this.setState({
-            colorTwo:color
-          });
-        }
-
-        
-        render() {
-          return (
-            <div>
-              <Canvas color={this.state.colorOne}/>
-              <Canvas color={this.state.colorTwo}/>
-              <Gradient colorOne={this.state.colorOne} colorTwo={this.state.colorTwo}/>
-              <input label="red" type="range" min="0" max="255" ref="red" onChange={this.changeColor}></input>
-              <input type="range" min="0" max="255" ref="blue" onChange={this.changeColor}></input>
-              <input type="range" min="0" max="255" ref="green" onChange={this.changeColor}></input>
-              <input type="range" min="0" max="255" ref="redTwo" onChange={this.changeColor}></input>
-              <input type="range" min="0" max="255" ref="blueTwo" onChange={this.changeColor}></input>
-              <input type="range" min="0" max="255" ref="greenTwo" onChange={this.changeColor}></input>
-              
-            </div>
-          );
-        }
-      }
+    
 
       ReactDOM.render(
-        <ColorPicker />,
+        <Gradient />,
         document.getElementById('example')
       );
     </script>
