@@ -6,6 +6,7 @@
     <script src="https://unpkg.com/react@15.3.1/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@15.3.1/dist/react-dom.js"></script>
     <script src="https://unpkg.com/babel-core@5.8.38/browser.min.js"></script>
+    
   </head>
   <body>
     <div id="example"></div>
@@ -35,9 +36,16 @@
               super();
               this.state = {
                 gradientColor: "",
-                complementColor:""
+                complementColor:"",
+                tintedColor:"",
+                shadedColor:"",
+                tint1:"",
+                tint2:"",
+                tint3:""
               };
               this.checkColor = this.checkColor.bind(this);
+              this.changeTint = this.changeTint.bind(this);
+
             }
             componentDidMount() {
                 this.updateCanvas();
@@ -60,16 +68,33 @@
               var colorz = "rgb("+comX+", "+comY+", "+comZ+")"
               this.setState({complementColor: colorz});
             }
+
             checkColor(evt){
                 var rect = evt.target.getBoundingClientRect();
                 var x = evt.pageX - rect.left;
                 var y = evt.pageY - rect.top;
                 const ctx = evt.target.getContext('2d');
                 var imgData=ctx.getImageData(x,y,1,1).data;
-                var complement = this.complementColor(imgData[0],imgData[1],imgData[2])
+                var complement = this.complementColor(imgData[0],imgData[1],imgData[2]);
+                this.setState({tint1:imgData[0],tint2:imgData[1],tint3:imgData[2]});
                 var color = "rgb("+imgData[0]+", "+imgData[1]+", "+imgData[2]+")"
                 this.setState({gradientColor: color});
-                console.log(this.state.gradientColor)
+            }
+            changeTint(evt){
+                var tintValue = this.refs.tint.value;
+                var tintX = (this.state.tint1-tintValue);
+                var tintY = (this.state.tint2-tintValue);
+                var tintZ = (this.state.tint3-tintValue);
+                var tinted = "rgb("+tintX+", "+tintY+", "+tintZ+")"
+                this.setState({tintedColor: tinted});
+            }
+            changeShade(evt){
+                var shadeValue = this.refs.shade.value;
+                var shadeX = this.state.tint1 + (255 - this.state.tint1) * shadeValue;
+                var shadeY = this.state.tint2 + (255 - this.state.tint2) * shadeValue;
+                var shadeZ = this.state.tint3 + (255 - this.state.tint3) * shadeValue;
+                var shaded = "rgb("+shadeX+", "+shadeY+", "+shadeZ+")"
+                this.setState({shadedColor: shaded});
             } 
 
             render() {
@@ -78,6 +103,10 @@
                     <canvas onClick={this.checkColor} ref="GradientCanvas" width={300} height={300}/>
                     <Canvas color={this.state.gradientColor}/>
                     <Canvas color={this.state.complementColor}/>
+                    <Canvas color={this.state.tintedColor}/>
+                    <Canvas color={this.state.shadedColor}/>
+                    <input type="range" min="0" max="200" ref="tint" onChange={this.changeTint}></input>
+                    <input type="range" min="0" max="200" ref="shade" onChange={this.changeShade}></input>
                     </div>
                 );
             }
@@ -90,9 +119,12 @@
           this.state = {
             colorOne:"red",
             colorTwo:"blue",
-            gradient:""
+            gradient:"",
+            tintLevel:""
           };
+          
           this.changeColor = this.changeColor.bind(this);
+          
         }
         changeColor() {
           var color = "rgb("+this.refs.red.value+", "+this.refs.blue.value+", "+this.refs.green.value+")"
@@ -103,20 +135,22 @@
           this.setState({
             colorTwo:color
           });
-          console.log(color);
         }
+
+        
         render() {
           return (
             <div>
               <Canvas color={this.state.colorOne}/>
               <Canvas color={this.state.colorTwo}/>
               <Gradient colorOne={this.state.colorOne} colorTwo={this.state.colorTwo}/>
-              <input type="range" min="0" max="255" ref="red" onChange={this.changeColor}></input>
+              <input label="red" type="range" min="0" max="255" ref="red" onChange={this.changeColor}></input>
               <input type="range" min="0" max="255" ref="blue" onChange={this.changeColor}></input>
               <input type="range" min="0" max="255" ref="green" onChange={this.changeColor}></input>
               <input type="range" min="0" max="255" ref="redTwo" onChange={this.changeColor}></input>
               <input type="range" min="0" max="255" ref="blueTwo" onChange={this.changeColor}></input>
               <input type="range" min="0" max="255" ref="greenTwo" onChange={this.changeColor}></input>
+              
             </div>
           );
         }
