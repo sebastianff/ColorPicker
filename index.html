@@ -49,7 +49,7 @@
               this.checkColor = this.checkColor.bind(this);
               this.changeColor = this.changeColor.bind(this);
               this.changeTint = this.changeTint.bind(this);
-              this.changeShade = this.changeTint.bind(this);
+              this.changeShade = this.changeShade.bind(this);
 
             }
             componentDidMount() {
@@ -106,11 +106,15 @@
             }
             changeShade(evt){
                 var shadeValue = this.refs.shade.value;
-                var shadeX = this.state.tint1 + (255 - this.state.tint1) * shadeValue;
-                var shadeY = this.state.tint2 + (255 - this.state.tint2) * shadeValue;
-                var shadeZ = this.state.tint3 + (255 - this.state.tint3) * shadeValue;
+                var shadeX = this.state.tint1 + (255 - this.state.tint1) * shadeValue * 0.01;
+                var shadeY = this.state.tint2 + (255 - this.state.tint2) * shadeValue * 0.01;
+                var shadeZ = this.state.tint3 + (255 - this.state.tint3) * shadeValue * 0.01;
+                var shadeX = Math.round(shadeX);
+                var shadeY = Math.round(shadeY);
+                var shadeZ = Math.round(shadeZ);
                 var shaded = "rgb("+shadeX+", "+shadeY+", "+shadeZ+")"
                 this.setState({shadedColor: shaded});
+                console.log(shaded)
             } 
 
             render() {
@@ -130,7 +134,7 @@
                     <input type="range" min="0" max="255" ref="blueTwo" onChange={this.changeColor}></input>
                     <input type="range" min="0" max="255" ref="greenTwo" onChange={this.changeColor}></input>
                     <input type="range" min="0" max="200" ref="tint" onChange={this.changeTint}></input>
-                    <input type="range" min="0" max="200" ref="shade" onChange={this.changeShade}></input>
+                    <input type="range" min="0" max="100" ref="shade" onChange={this.changeShade}></input>
                     </div>
                 );
             }
