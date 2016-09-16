@@ -21,7 +21,7 @@ class Canvas extends React.Component {
   }
 }
 
-class Gradient extends React.Component {
+class ColorPicker extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -166,6 +166,6 @@ class Gradient extends React.Component {
 }
 
 ReactDOM.render(
-  <Gradient />,
+  <ColorPicker />,
   document.getElementById('app')
 );
