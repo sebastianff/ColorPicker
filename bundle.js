@@ -100,13 +100,13 @@
 	  return Canvas;
 	}(_react2.default.Component);
 
-	var Gradient = function (_React$Component2) {
-	  _inherits(Gradient, _React$Component2);
+	var ColorPicker = function (_React$Component2) {
+	  _inherits(ColorPicker, _React$Component2);
 
-	  function Gradient() {
-	    _classCallCheck(this, Gradient);
+	  function ColorPicker() {
+	    _classCallCheck(this, ColorPicker);
 
-	    var _this2 = _possibleConstructorReturn(this, (Gradient.__proto__ || Object.getPrototypeOf(Gradient)).call(this));
+	    var _this2 = _possibleConstructorReturn(this, (ColorPicker.__proto__ || Object.getPrototypeOf(ColorPicker)).call(this));
 
 	    _this2.state = {
 	      colorOne: "rgb(127,127,127)",
@@ -123,11 +123,10 @@
 	    _this2.changeColor = _this2.changeColor.bind(_this2);
 	    _this2.changeTint = _this2.changeTint.bind(_this2);
 	    _this2.changeShade = _this2.changeShade.bind(_this2);
-
 	    return _this2;
 	  }
 
-	  _createClass(Gradient, [{
+	  _createClass(ColorPicker, [{
 	    key: 'componentDidMount',
 	    value: function componentDidMount() {
 	      this.updateCanvas();
@@ -226,7 +225,12 @@
 	            _react2.default.createElement(
 	              'div',
 	              { className: 'col-md-4' },
-	              _react2.default.createElement('canvas', { onClick: this.checkColor, ref: 'GradientCanvas' })
+	              _react2.default.createElement('canvas', { onClick: this.checkColor, ref: 'GradientCanvas' }),
+	              _react2.default.createElement(
+	                'p',
+	                null,
+	                'Double Click to Select a Color'
+	              )
 	            ),
 	            _react2.default.createElement(
 	              'div',
@@ -239,22 +243,82 @@
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'col-md-3' },
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Selected Color'
+	                ),
 	                _react2.default.createElement(Canvas, { color: this.state.gradientColor })
 	              ),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'col-md-3' },
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Complementary Color'
+	                ),
 	                _react2.default.createElement(Canvas, { color: this.state.complementColor })
 	              ),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'col-md-3' },
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Tinted Color'
+	                ),
 	                _react2.default.createElement(Canvas, { color: this.state.tintedColor })
 	              ),
 	              _react2.default.createElement(
 	                'div',
 	                { className: 'col-md-3' },
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Shaded Color'
+	                ),
 	                _react2.default.createElement(Canvas, { color: this.state.shadedColor })
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'row' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-md-3' },
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Pick First Color'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-md-3' },
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Set a Shade'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-md-3' },
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Set a Tint'
+	                )
+	              ),
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'col-md-3' },
+	                _react2.default.createElement(
+	                  'p',
+	                  null,
+	                  'Pick Second Color'
+	                )
 	              )
 	            ),
 	            _react2.default.createElement(
@@ -291,10 +355,10 @@
 	    }
 	  }]);
 
-	  return Gradient;
+	  return ColorPicker;
 	}(_react2.default.Component);
 
-	_reactDom2.default.render(_react2.default.createElement(Gradient, null), document.getElementById('app'));
+	_reactDom2.default.render(_react2.default.createElement(ColorPicker, null), document.getElementById('app'));
 
 /***/ },
 /* 1 */

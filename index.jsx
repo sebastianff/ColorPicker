@@ -122,22 +122,41 @@ class ColorPicker extends React.Component {
                 </div>
                 <div className="col-md-4">
                  <canvas onClick={this.checkColor} ref="GradientCanvas" />
+                 <p>Double Click to Select a Color</p>
                 </div>
                 <div className="col-md-4">
                   <Canvas color={this.state.colorTwo}/>
                 </div>
                 <div className="row">
                   <div className="col-md-3">
+                    <p>Selected Color</p>
                     <Canvas color={this.state.gradientColor}/>
                   </div>
                   <div className="col-md-3">
+                    <p>Complementary Color</p>
                     <Canvas color={this.state.complementColor}/>
                   </div>
                   <div className="col-md-3">
+                    <p>Tinted Color</p> 
                     <Canvas color={this.state.tintedColor}/>
                   </div>
                   <div className="col-md-3">
+                    <p>Shaded Color</p>
                     <Canvas color={this.state.shadedColor}/>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-3">
+                    <p>Pick First Color</p>
+                  </div>
+                  <div className="col-md-3">
+                    <p>Set a Shade</p>
+                  </div>
+                  <div className="col-md-3">
+                    <p>Set a Tint</p>
+                  </div>
+                  <div className="col-md-3">
+                    <p>Pick Second Color</p>
                   </div>
                 </div>
                 <div className="row">
